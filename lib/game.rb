@@ -1,11 +1,9 @@
 class Game
   def initialize
     @rolls = []
-    @current_roll = 0
   end
 
   def roll(pins)
-    @current_roll += 1
     @rolls << pins
   end
 
