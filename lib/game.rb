@@ -10,21 +10,20 @@ class Game
   def score
     total_score = 0
 
-    frame_index = 0
+    roll = 0
     (0...10).each do |frame|
-      if @rolls[frame_index + 1].nil?
-        @rolls[frame_index + 1] = 0 
-      end
+      next_roll = @rolls[roll + 1]
+      next_roll = 0 if next_roll.nil?
 
-      if strike? frame_index
-        total_score += 10 + @rolls[frame_index + 1] + @rolls[frame_index + 2]
-        frame_index += 1
-      elsif spare? frame_index
-        total_score += 10 + @rolls[frame_index + 2]
-        frame_index += 2
+      if strike? roll
+        total_score += calculate_strike roll
+        roll += 1
+      elsif spare? roll
+        total_score += calculate_spare roll
+        roll += 2
       else
-        total_score += @rolls[frame_index] + @rolls[frame_index + 1]
-        frame_index += 2
+        total_score += calculate_frame roll
+        roll += 2
       end
     end
 
@@ -33,11 +32,23 @@ class Game
 
   private 
 
-  def strike?(frame_index)
-    @rolls[frame_index] == 10
+  def strike?(roll)
+    @rolls[roll] == 10
   end
 
-  def spare?(frame_index)
-    @rolls[frame_index] + @rolls[frame_index + 1] == 10
+  def spare?(roll)
+    @rolls[roll] + @rolls[roll + 1] == 10
+  end
+
+  def calculate_frame(roll)
+    @rolls[roll] + @rolls[roll + 1]
+  end
+
+  def calculate_strike(roll)
+    10 + @rolls[roll + 1] + @rolls[roll + 2]
+  end
+
+  def calculate_spare(roll)
+    10 + @rolls[roll + 2]
   end
 end
