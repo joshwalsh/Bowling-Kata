@@ -7,6 +7,11 @@ describe Game do
     n.times { subject.roll pins }
   end
 
+  def roll_spare
+    subject.roll 5
+    subject.roll 5
+  end
+
   it "scores 0 for gutter game" do
     roll_many 20, 0
     subject.score.should == 0
@@ -18,8 +23,7 @@ describe Game do
   end
 
   it "scores games with 1 spare" do
-    subject.roll 5
-    subject.roll 5
+    roll_spare
     subject.roll 3
     roll_many 17, 0
 
