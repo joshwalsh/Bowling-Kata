@@ -1,6 +1,7 @@
 class Game
   def initialize
     @rolls = []
+    @current_roll = 0
   end
 
   def roll(pins)
@@ -10,18 +11,8 @@ class Game
   def score
     total_score = 0
 
-    roll = 0
     (0...10).each do |frame|
-      if strike? roll
-        total_score += calculate_strike roll
-        roll += 1
-      elsif spare? roll
-        total_score += calculate_spare roll
-        roll += 2
-      else
-        total_score += calculate_frame roll
-        roll += 2
-      end
+      total_score += calculate_frame
     end
 
     total_score
@@ -29,23 +20,38 @@ class Game
 
   private 
 
-  def strike?(roll)
-    @rolls[roll] == 10
+  def strike?
+    ball_one(@current_roll) == 10
   end
 
-  def spare?(roll)
-    @rolls[roll] + @rolls[roll + 1] == 10
+  def spare?
+    ball_one(@current_roll) + ball_two(@current_roll) == 10
   end
 
-  def calculate_frame(roll)
-   ball_one(roll) + ball_two(roll)
+  def calculate_frame
+    if strike?
+      calculate_strike
+    elsif spare?
+      calculate_spare
+    else
+      roll = @current_roll
+      @current_roll += 2
+
+      ball_one(roll) + ball_two(roll)
+    end
   end
 
-  def calculate_strike(roll)
+  def calculate_strike
+    roll = @current_roll
+    @current_roll += 1
+
     ball_one(roll) + extra_ball_one(roll) + extra_ball_two(roll)
   end
 
-  def calculate_spare(roll)
+  def calculate_spare
+    roll = @current_roll
+    @current_roll += 2
+
     ball_one(roll) + ball_two(roll) + extra_ball_one(roll)
   end
 
