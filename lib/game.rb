@@ -12,9 +12,6 @@ class Game
 
     roll = 0
     (0...10).each do |frame|
-      next_roll = @rolls[roll + 1]
-      next_roll = 0 if next_roll.nil?
-
       if strike? roll
         total_score += calculate_strike roll
         roll += 1
@@ -41,14 +38,30 @@ class Game
   end
 
   def calculate_frame(roll)
-    @rolls[roll] + @rolls[roll + 1]
+   ball_one(roll) + ball_two(roll)
   end
 
   def calculate_strike(roll)
-    10 + @rolls[roll + 1] + @rolls[roll + 2]
+    ball_one(roll) + extra_ball_one(roll) + extra_ball_two(roll)
   end
 
   def calculate_spare(roll)
-    10 + @rolls[roll + 2]
+    ball_one(roll) + ball_two(roll) + extra_ball_one(roll)
+  end
+
+  def ball_one(roll)
+    @rolls[roll]
+  end
+  
+  def ball_two(roll)
+    @rolls[roll + 1]
+  end
+
+  def extra_ball_one(roll)
+    @rolls[roll + 2]
+  end
+
+  def extra_ball_two(roll)
+    ball_two(roll)
   end
 end
