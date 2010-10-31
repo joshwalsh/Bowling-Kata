@@ -14,7 +14,7 @@ class Game
 
     frame_index = 0
     (0...10).each do |frame|
-      if @rolls[frame_index] + @rolls[frame_index + 1] == 10
+      if spare? frame_index
         total_score += 10 + @rolls[frame_index + 2]
         frame_index += 2
       else
@@ -24,5 +24,11 @@ class Game
     end
 
     total_score
+  end
+
+  private 
+
+  def spare?(frame_index)
+    @rolls[frame_index] + @rolls[frame_index + 1] == 10
   end
 end
