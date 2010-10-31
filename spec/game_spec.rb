@@ -12,6 +12,10 @@ describe Game do
     subject.roll 5
   end
 
+  def roll_strike
+    subject.roll 10
+  end
+
   it "scores 0 for gutter game" do
     roll_many 20, 0
     subject.score.should == 0
@@ -31,7 +35,7 @@ describe Game do
   end
 
   it "scores game with 1 strike" do
-    subject.roll 10
+    roll_strike
     subject.roll 3
     subject.roll 4
     roll_many 16, 0
