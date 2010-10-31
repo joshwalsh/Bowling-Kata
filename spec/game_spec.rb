@@ -17,12 +17,12 @@ describe Game do
     subject.score.should == 20
   end
 
-  #it "scores games with 1 spare" do
-    #subject.roll 5
-    #subject.roll 5
-    #subject.roll 3
-    #roll_many 17, 0
+  it "scores games with 1 spare" do
+    subject.roll 5
+    subject.roll 5
+    subject.roll 3
+    roll_many 17, 0
 
-    #subject.score.should == 16
-  #end
+    subject.score.should == 16
+  end
 end
