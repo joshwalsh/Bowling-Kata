@@ -42,4 +42,9 @@ describe Game do
 
     subject.score.should == 24
   end
+
+  it "scores a perfect game" do
+    roll_many 12, 10
+    subject.score.should == 300
+  end
 end
