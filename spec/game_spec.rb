@@ -29,4 +29,13 @@ describe Game do
 
     subject.score.should == 16
   end
+
+  it "scores game with 1 strike" do
+    subject.roll 10
+    subject.roll 3
+    subject.roll 4
+    roll_many 16, 0
+
+    subject.score.should == 24
+  end
 end
